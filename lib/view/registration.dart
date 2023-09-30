@@ -27,7 +27,7 @@ class RegistrationScreen extends StatelessWidget {
                   width: 320.w,
                   colour: kBlue,
                   click: (){},
-                  child: _buildText("Sign up", 16.sp, FontWeight.w600, kWhite),
+                  child: _buildText("Sign Up", 16.sp, FontWeight.w500, kWhite),
                 ),
               ),
             ],

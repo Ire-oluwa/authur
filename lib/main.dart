@@ -14,6 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
+      ensureScreenSize: true,
+      minTextAdapt: true,
+      splitScreenMode: true,
+      designSize: const Size(375, 812),
       builder: (context, child) {
         return const MaterialApp(
           home: SplashScreen(),
