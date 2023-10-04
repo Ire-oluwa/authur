@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -6,7 +7,8 @@ class CustomElevatedButton extends StatelessWidget {
     required this.height,
     required this.width,
     required this.child,
-    required this.colour, required this.click,
+    required this.colour,
+    required this.click,
   });
 
   final double height;
@@ -24,6 +26,9 @@ class CustomElevatedButton extends StatelessWidget {
         onPressed: () {},
         style: ElevatedButton.styleFrom(
           backgroundColor: colour,
+          shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(20.r),
+          ),
         ),
         child: child,
       ),
