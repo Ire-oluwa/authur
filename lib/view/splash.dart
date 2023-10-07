@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/utils/constants.dart';
-import 'package:untitled/view/main_screen.dart';
 import 'package:untitled/view/registration.dart';
+import 'package:untitled/view_model/registration_bloc.dart';
+import 'package:untitled/view_model/registration_state.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,11 +17,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   ///Animation
   late AnimationController controller;
   late Animation<double> animation;
+  late RegistrationBloc registrationBloc;
+  final registrationState = RegistrationState();
 
   @override
   void initState() {
     controller =  AnimationController(vsync: this, duration: const Duration
-      (seconds: 5),);
+      (seconds: 4),);
 
     final curvedAnimation = CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
 
@@ -32,10 +35,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     controller.repeat(reverse: true);
 
-    Future.delayed(const Duration(seconds: 10)).then(
+    Future.delayed(const Duration(seconds: 8)).then(
       (value) => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const RegistrationScreen(),
+          builder: (context) =>  RegistrationScreen(bloc: RegistrationBloc(registrationState)),
         ),
       ),
     );

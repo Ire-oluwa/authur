@@ -4,9 +4,12 @@ import 'package:untitled/model/custom_text.dart';
 import 'package:untitled/model/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/view/registration.dart';
+import 'package:untitled/view_model/registration_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, required this.registrationBloc});
+
+  final RegistrationBloc registrationBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const RegistrationScreen(),
+                            builder: (context) =>  RegistrationScreen(bloc:registrationBloc),
                           ),
                         );
                       },
@@ -79,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                     height: 40.h,
                     width: 320.w,
                     colour: kBlue,
-                    click: () {},
+                    click: () => Navigator.of(context).pushNamed('/main'),
                     child: CustomText(
                       text: "Sign In",
                       colour: kWhite,

@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:untitled/main.dart';
-
+import 'package:untitled/view_model/registration_bloc.dart';
+late RegistrationBloc bloc;
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget( MyApp(registrationBloc: bloc,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:untitled/model/custom_text_field.dart';
 import 'package:untitled/model/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/view/login.dart';
+import 'package:untitled/view_model/registration_bloc.dart';
+import 'package:untitled/view_model/registration_state.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({super.key});
+  RegistrationScreen({super.key, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +61,12 @@ class RegistrationScreen extends StatelessWidget {
                       FontWeight.w400,
                       kGrey,
                     ),
-
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
+                            builder: (context) => LoginScreen
+                              (registrationBloc: bloc),
                           ),
                         );
                       },
@@ -78,7 +82,10 @@ class RegistrationScreen extends StatelessWidget {
                     height: 40.h,
                     width: 320.w,
                     colour: kBlue,
-                    click: () {},
+                    click: () {
+                      // Navigator.of(context).pushNamed('/main');
+                      debugPrint("qwerty");
+                    },
                     child:
                         _buildText("Sign Up", 16.sp, FontWeight.w500, kWhite),
                   ),
@@ -90,6 +97,9 @@ class RegistrationScreen extends StatelessWidget {
       ),
     );
   }
+
+  final RegistrationState registrationState = RegistrationState();
+  final RegistrationBloc bloc;
 
   Widget _buildText(String text, double size, FontWeight weight, Color colour) {
     return Text(
@@ -103,20 +113,19 @@ class RegistrationScreen extends StatelessWidget {
   }
 
   Widget _buildName() {
-    return TextField(
-      cursorColor: kBlack,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: kBlack.withOpacity(0.1),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        hintText: "Name",
+    return BlocProvider(
+      create: (context) => RegistrationBloc(registrationState),
+      child: BlocBuilder<RegistrationBloc, RegistrationState>(
+        // bloc: RegistrationBloc(registrationState),
+        builder: (context, state) {
+          return CustomTextField(
+          hint: "Name",
+          onChanged: (value) => bloc.onNameChanged(value),
+          controller: bloc.nameController,
+          formatter: kNameFormatter,
+          inputType: kNameType,
+        );
+        },
       ),
     );
   }
