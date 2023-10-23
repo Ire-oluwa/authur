@@ -7,10 +7,11 @@ import 'package:untitled/utils/constants.dart';
 import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/login.dart';
 import 'package:untitled/view_model/registration_bloc.dart';
-import 'package:untitled/view_model/registration_state.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  RegistrationScreen({super.key, required this.bloc});
+  const RegistrationScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,8 @@ class RegistrationScreen extends StatelessWidget {
               children: [
                 _buildText(Strings.welcome, 32.sp, FontWeight.bold, kBlack),
                 SizedBox(height: 30.h),
-                _buildText(Strings.signUpSubtitle, 12.sp, FontWeight.bold, kGrey),
+                _buildText(
+                    Strings.signUpSubtitle, 12.sp, FontWeight.bold, kGrey),
                 SizedBox(height: 30.h),
                 _buildName(),
                 SizedBox(height: 15.h),
@@ -66,13 +68,12 @@ class RegistrationScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen
-                              (registrationBloc: bloc),
+                            builder: (context) => const LoginScreen(),
                           ),
                         );
                       },
-                      child:
-                          _buildText(Strings.signIn, 14.sp, FontWeight.bold, kBlue),
+                      child: _buildText(
+                          Strings.signIn, 14.sp, FontWeight.bold, kBlue),
                     ),
                   ],
                 ),
@@ -87,8 +88,8 @@ class RegistrationScreen extends StatelessWidget {
                       // Navigator.of(context).pushNamed('/main');
                       debugPrint("qwerty");
                     },
-                    child:
-                        _buildText(Strings.signUp, 16.sp, FontWeight.w500, kWhite),
+                    child: _buildText(
+                        Strings.signUp, 16.sp, FontWeight.w500, kWhite),
                   ),
                 ),
               ],
@@ -99,8 +100,7 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
-  final RegistrationState registrationState = RegistrationState();
-  final RegistrationBloc bloc;
+  // final RegistrationBloc bloc;
 
   Widget _buildText(String text, double size, FontWeight weight, Color colour) {
     return Text(
@@ -114,20 +114,17 @@ class RegistrationScreen extends StatelessWidget {
   }
 
   Widget _buildName() {
-    return BlocProvider(
-      create: (context) => RegistrationBloc(registrationState),
-      child: BlocBuilder<RegistrationBloc, RegistrationState>(
-        // bloc: RegistrationBloc(registrationState),
-        builder: (context, state) {
-          return CustomTextField(
+    return BlocBuilder<RegistrationBloc, RegistrationState>(
+      // bloc: RegistrationBloc(registrationState),
+      builder: (context, state) {
+        return CustomTextField(
           hint: Strings.name,
-          onChanged: (value) => bloc.onNameChanged(value),
-          controller: bloc.nameController,
+          onChanged: (value) {},
+          controller: TextEditingController(),
           formatter: kNameFormatter,
           inputType: kNameType,
         );
-        },
-      ),
+      },
     );
   }
 
@@ -154,17 +151,18 @@ class RegistrationScreen extends StatelessWidget {
     return TextField(
       cursorColor: kBlack,
       decoration: InputDecoration(
-          filled: true,
-          fillColor: kBlack.withOpacity(0.1),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: kBlack),
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          hintText: Strings.email,),
+        filled: true,
+        fillColor: kBlack.withOpacity(0.1),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: kBlack),
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        hintText: Strings.email,
+      ),
     );
   }
 

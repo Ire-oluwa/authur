@@ -5,12 +5,11 @@ import 'package:untitled/model/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/registration.dart';
-import 'package:untitled/view_model/registration_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key, required this.registrationBloc});
+  const LoginScreen({super.key});
 
-  final RegistrationBloc registrationBloc;
+  // final RegistrationBloc registrationBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  RegistrationScreen(bloc:registrationBloc),
+                            builder: (context) =>  const RegistrationScreen(),
                           ),
                         );
                       },

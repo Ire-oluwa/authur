@@ -4,19 +4,15 @@ import 'package:untitled/view/login.dart';
 import 'package:untitled/view/main_screen.dart';
 import 'package:untitled/view/registration.dart';
 import 'package:untitled/view/splash.dart';
-import 'package:untitled/view_model/registration_bloc.dart';
-import 'package:untitled/view_model/registration_state.dart';
 
 void main() async{
   await ScreenUtil.ensureScreenSize();
-  final registrationState = RegistrationState();
-  runApp( MyApp(registrationBloc: RegistrationBloc(registrationState),));
+  // final registrationState = RegistrationState();
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key, required this.registrationBloc});
-  final registrationState = RegistrationState();
-  final RegistrationBloc registrationBloc;
+   const MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -30,10 +26,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: const SplashScreen(),
           routes: {
-            '/registration': (context) =>  RegistrationScreen(bloc:
-        RegistrationBloc(registrationState),),
-            '/login': (context) =>  LoginScreen(registrationBloc:
-            RegistrationBloc(registrationState)),
+            '/registration': (context) =>  const RegistrationScreen(),
+            '/login': (context) =>  const LoginScreen(),
             '/main': (context) => const MainScreen(),
           },
         );

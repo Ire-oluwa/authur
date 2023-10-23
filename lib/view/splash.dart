@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/view/registration.dart';
 import 'package:untitled/view_model/registration_bloc.dart';
-import 'package:untitled/view_model/registration_state.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,24 +11,25 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
-
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   ///Animation
   late AnimationController controller;
   late Animation<double> animation;
   late RegistrationBloc registrationBloc;
-  final registrationState = RegistrationState();
 
   @override
   void initState() {
-    controller =  AnimationController(vsync: this, duration: const Duration
-      (seconds: 4),);
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    );
 
-    final curvedAnimation = CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
+    final curvedAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
 
     animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation)
-      ..addListener
-      ((){
+      ..addListener(() {
         setState(() {});
       });
 
@@ -37,9 +37,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     Future.delayed(const Duration(seconds: 8)).then(
       (value) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) =>  RegistrationScreen(bloc: RegistrationBloc(registrationState)),
-        ),
+        MaterialPageRoute(builder: (context) => const RegistrationScreen()),
       ),
     );
     super.initState();
@@ -51,7 +49,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,18 +58,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           child: AnimatedBuilder(
             animation: animation,
             builder: (context, child) {
-            return Transform.translate(
-              offset: Offset(0.w, -100.h * animation.value),
-              child: Container(
-                width: 100.w,
-                height: 100.h,
-                decoration: BoxDecoration(
-                  color: kBlue.withOpacity(0.5),
-                  shape: BoxShape.circle,
+              return Transform.translate(
+                offset: Offset(0.w, -100.h * animation.value),
+                child: Container(
+                  width: 100.w,
+                  height: 100.h,
+                  decoration: BoxDecoration(
+                    color: kBlue.withOpacity(0.5),
+                    shape: BoxShape.circle,
+                  ),
                 ),
-              ),
-            );
-          },),
+              );
+            },
+          ),
         ),
       ),
     );

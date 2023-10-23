@@ -1,9 +1,9 @@
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-// part of 'registration_bloc.dart';
+part of 'registration_bloc.dart';
 
-@immutable
+// @immutable
 abstract class RegistrationEvent {}
 
 class GetRegistration extends RegistrationEvent {
