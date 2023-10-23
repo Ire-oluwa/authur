@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/model/custom_text.dart';
 import 'package:untitled/model/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
+import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/registration.dart';
 import 'package:untitled/view_model/registration_bloc.dart';
 
@@ -22,14 +23,14 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: "Welcome Back",
+                  text: Strings.welcomeBack,
                   colour: kBlack,
                   weight: FontWeight.bold,
                   size: 32.sp,
                 ),
                 SizedBox(height: 15.h),
                 CustomText(
-                  text: "Sign in to continue",
+                  text: Strings.continueSignIn,
                   colour: kGrey,
                   weight: FontWeight.bold,
                   size: 12.sp,
@@ -42,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: CustomText(
-                    text: "Forgot Password?",
+                    text: Strings.forgotPassword,
                     colour: kBlack,
                     weight: FontWeight.w500,
                     size: 14.sp,
@@ -53,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: "Create new account?",
+                      text: Strings.createAccount,
                       size: 14.sp,
                       weight: FontWeight.w400,
                       colour: kGrey,
@@ -67,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                         );
                       },
                       child: CustomText(
-                        text: "Sign Up",
+                        text: Strings.signUp,
                         size: 14.sp,
                         weight: FontWeight.bold,
                         colour: kBlue,
@@ -84,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                     colour: kBlue,
                     click: () => Navigator.of(context).pushNamed('/main'),
                     child: CustomText(
-                      text: "Sign In",
+                      text: Strings.signIn,
                       colour: kWhite,
                       weight: FontWeight.w500,
                       size: 16.sp,
@@ -113,7 +114,7 @@ class LoginScreen extends StatelessWidget {
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(20.r),
           ),
-          hintText: "Email"),
+          hintText: Strings.email),
     );
   }
 
@@ -131,7 +132,7 @@ class LoginScreen extends StatelessWidget {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(20.r),
         ),
-        hintText: "Password",
+        hintText: Strings.password,
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/model/custom_text_field.dart';
 import 'package:untitled/model/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
+import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/login.dart';
 import 'package:untitled/view_model/registration_bloc.dart';
 import 'package:untitled/view_model/registration_state.dart';
@@ -24,9 +25,9 @@ class RegistrationScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildText("Welcome User", 32.sp, FontWeight.bold, kBlack),
+                _buildText(Strings.welcome, 32.sp, FontWeight.bold, kBlack),
                 SizedBox(height: 30.h),
-                _buildText("Sign up to join", 12.sp, FontWeight.bold, kGrey),
+                _buildText(Strings.signUpSubtitle, 12.sp, FontWeight.bold, kGrey),
                 SizedBox(height: 30.h),
                 _buildName(),
                 SizedBox(height: 15.h),
@@ -39,11 +40,11 @@ class RegistrationScreen extends StatelessWidget {
                 Row(
                   children: [
                     _buildCheckButton(),
-                    _buildText("I agree to the", 14.sp, FontWeight.w400, kGrey),
+                    _buildText(Strings.agree, 14.sp, FontWeight.w400, kGrey),
                     TextButton(
                       onPressed: () {},
                       child: _buildText(
-                        "Terms of Service",
+                        Strings.terms,
                         14.sp,
                         FontWeight.bold,
                         kBlue,
@@ -56,7 +57,7 @@ class RegistrationScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildText(
-                      "Have an account?",
+                      Strings.haveAnAccount,
                       14.sp,
                       FontWeight.w400,
                       kGrey,
@@ -71,7 +72,7 @@ class RegistrationScreen extends StatelessWidget {
                         );
                       },
                       child:
-                          _buildText("Sign In", 14.sp, FontWeight.bold, kBlue),
+                          _buildText(Strings.signIn, 14.sp, FontWeight.bold, kBlue),
                     ),
                   ],
                 ),
@@ -87,7 +88,7 @@ class RegistrationScreen extends StatelessWidget {
                       debugPrint("qwerty");
                     },
                     child:
-                        _buildText("Sign Up", 16.sp, FontWeight.w500, kWhite),
+                        _buildText(Strings.signUp, 16.sp, FontWeight.w500, kWhite),
                   ),
                 ),
               ],
@@ -119,7 +120,7 @@ class RegistrationScreen extends StatelessWidget {
         // bloc: RegistrationBloc(registrationState),
         builder: (context, state) {
           return CustomTextField(
-          hint: "Name",
+          hint: Strings.name,
           onChanged: (value) => bloc.onNameChanged(value),
           controller: bloc.nameController,
           formatter: kNameFormatter,
@@ -144,7 +145,7 @@ class RegistrationScreen extends StatelessWidget {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(20.r),
         ),
-        hintText: "Phone",
+        hintText: Strings.phone,
       ),
     );
   }
@@ -163,7 +164,7 @@ class RegistrationScreen extends StatelessWidget {
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(20.r),
           ),
-          hintText: "Email"),
+          hintText: Strings.email,),
     );
   }
 
@@ -181,7 +182,7 @@ class RegistrationScreen extends StatelessWidget {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(20.r),
         ),
-        hintText: "Password",
+        hintText: Strings.password,
       ),
     );
   }
