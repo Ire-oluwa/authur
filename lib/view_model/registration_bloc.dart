@@ -30,50 +30,35 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/model/network/network_helper.dart';
+import 'package:untitled/model/responses/registration_response.dart';
 
 part 'registration_event.dart';
 
 part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  RegistrationBloc() : super(RegistrationInitial()) {
-    on((event, emit) async {
-      if (event is GetRegistration) {
-        String value = validation(event);
-        if (value != "") {
-          emit (RegistrationError(value));
-        } else {
-          emit(RegistrationLoading());
+  late RegistrationResponse registrationResponse;
+  ApiCall apiCall;
 
-          await Future.delayed(const Duration(seconds: 0), () async {
-            //storing data in SharedPreferences
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.setString('email', "${event.email}");
-            prefs.setString('password', "${event.password}");
-            emit(RegistrationLoaded());
-          }).onError((error, stackTrace) {
-            emit(RegistrationError(error.toString()));
-          });
-        }
+  RegistrationBloc(this.apiCall) : super(RegistrationInitial()) {
+    on<GetRegistration>((event, emit) async {
+      emit(RegistrationLoading());
+
+      try {
+        registrationResponse = await apiCall.createUser(
+          event.fullName,
+          event.email,
+          event.phone,
+          event.password,
+        );
+        emit(RegistrationLoaded(registrationResponse));
+      }
+      catch (e) {
+        emit (RegistrationError(e.toString()));
       }
     });
   }
 }
 
 
-///validation for text field
-String validation(GetRegistration data) {
-  if (data.fullName?.isEmpty == true) {
-    return 'Please enter Your full name';
-  }
-  if (data.email?.isEmpty == true) {
-    return 'Please enter Your email-id';
-  }
-  if (data.password?.isEmpty == true) {
-    return 'Please enter Your password';
-  }
-  if (data.phone?.isEmpty == true) {
-    return 'Please enter Your contact Number';
-  }
-  return '';
-}

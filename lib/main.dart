@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:untitled/model/network/network_helper.dart';
 import 'package:untitled/view/login.dart';
 import 'package:untitled/view/main_screen.dart';
 import 'package:untitled/view/registration.dart';
 import 'package:untitled/view/splash.dart';
+import 'package:untitled/view_model/registration_bloc.dart';
 
 void main() async{
   await ScreenUtil.ensureScreenSize();
@@ -22,14 +25,20 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       designSize: const Size(375, 812),
       builder: (context, child) {
-        return  MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: const SplashScreen(),
-          routes: {
-            '/registration': (context) =>  const RegistrationScreen(),
-            '/login': (context) =>  const LoginScreen(),
-            '/main': (context) => const MainScreen(),
-          },
+        return  MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => RegistrationBloc(ApiCall())),
+
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: const SplashScreen(),
+            routes: {
+              '/registration': (context) =>  const RegistrationScreen(),
+              '/login': (context) =>  const LoginScreen(),
+              '/main': (context) => const MainScreen(),
+            },
+          ),
         );
       },
     );

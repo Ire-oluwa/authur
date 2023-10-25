@@ -19,12 +19,10 @@ class RegistrationInitial extends RegistrationState {}
 
 class RegistrationLoading extends RegistrationState {}
 
-class RegistrationLoaded extends RegistrationState {}
+class RegistrationLoaded extends RegistrationState {
+  final RegistrationResponse registrationResponse;
 
-class RegistrationValidation extends RegistrationState {
-  String? value;
-
-  RegistrationValidation(this.value);
+  RegistrationLoaded(this.registrationResponse);
 }
 
 class RegistrationError extends RegistrationState {

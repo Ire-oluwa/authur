@@ -1,39 +1,41 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:untitled/model/responses/registration_response.dart';
 import 'package:untitled/model/urls.dart';
 
-class ApiCall {
+ class ApiCall {
   /// ====================== Registration ========================
-  Future<http.Response> createUser(
-    String name,
-    String email,
-    String phone,
-    String password,
-  ) {
+  Future<RegistrationResponse> createUser(
+      String name, String email, String phone, String password) async {
     try {
-      final body = jsonEncode({
+      final body = {
         "name": name,
         "email": email,
         "phone": phone,
         "password": password,
-      });
+      };
 
-      final response = http.post(
+      final response = await http.post(
         Uri.parse("${Url.baseUrl}${Url.signup}"),
-        body: body,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(body),
       );
-      return response;
+
+      final registrationResponse = jsonDecode(response.body);
+      RegistrationResponse regResponse =
+          RegistrationResponse(message: registrationResponse);
+      return regResponse;
     } catch (e) {
       throw ("exception: ${e.toString()}");
     }
   }
 
   /// =============== Login ===============
-  Future<http.Response> signInUser(String email, String password) {
+  Future<http.Response> signInUser(String email, String password) async {
     try {
       final body = jsonEncode({"email": email, "password": password});
-      final response = http.post(
+      final response = await http.post(
         Uri.parse("${Url.baseUrl}${Url.login}"),
         body: body,
       );

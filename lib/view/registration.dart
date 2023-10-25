@@ -6,15 +6,27 @@ import 'package:untitled/model/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/login.dart';
+import 'package:untitled/view/main_screen.dart';
 import 'package:untitled/view_model/registration_bloc.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({
     super.key,
   });
 
   @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+
+  final fullName = TextEditingController();
+  final email = TextEditingController();
+  final phone = TextEditingController();
+  final password = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    final registrationBloc = BlocProvider.of<RegistrationBloc>(context);
     return kUnfocus(
       child: SafeArea(
         child: Scaffold(
@@ -78,20 +90,38 @@ class RegistrationScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 15.h),
-                Align(
-                  alignment: Alignment.center,
-                  child: CustomElevatedButton(
-                    height: 40.h,
-                    width: 320.w,
-                    colour: kBlue,
-                    click: () {
-                      // Navigator.of(context).pushNamed('/main');
-                      debugPrint("qwerty");
-                    },
-                    child: _buildText(
-                        Strings.signUp, 16.sp, FontWeight.w500, kWhite),
-                  ),
-                ),
+                BlocConsumer(listener: (context, state) {
+                  if (state is RegistrationLoaded &&
+                      state.registrationResponse.message.isNotEmpty) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const MainScreen(),
+                    ));
+                  } else if (state is RegistrationError) {
+                    final message = state.error;
+                  }
+                }, builder: (context, state) {
+                  if (state is RegistrationLoading) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return Align(
+                      alignment: Alignment.center,
+                      child: CustomElevatedButton(
+                        height: 40.h,
+                        width: 320.w,
+                        colour: kBlue,
+                        click: () {
+                          // Navigator.of(context).pushNamed('/main');
+                          registrationBloc.add(GetRegistration(fullName:
+                          fullName.text, email: email.text, phone: phone.text,
+                              password:
+                          password.text));
+                        },
+                        child: _buildText(
+                            Strings.signUp, 16.sp, FontWeight.w500, kWhite),
+                      ),
+                    );
+                  }
+                }),
               ],
             ),
           ),
@@ -101,7 +131,6 @@ class RegistrationScreen extends StatelessWidget {
   }
 
   // final RegistrationBloc bloc;
-
   Widget _buildText(String text, double size, FontWeight weight, Color colour) {
     return Text(
       text,
