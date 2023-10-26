@@ -5,7 +5,7 @@ import 'package:untitled/utils/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    super.key, required this.hint, required this.onChanged, required this.inputType, required this.formatter, required this.controller,
+    super.key, required this.hint, required this.onChanged, required this.inputType, required this.formatter, required this.controller, this.maxLength,
   });
 
   final String hint;
@@ -13,18 +13,23 @@ class CustomTextField extends StatelessWidget {
   final TextInputType inputType;
   final List<TextInputFormatter> formatter;
   final TextEditingController controller;
+  final int? maxLength;
 
 
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      textInputAction: kActionNext,
     cursorColor: kBlack,
     onChanged: onChanged,
     keyboardType: inputType,
     inputFormatters: formatter,
     controller: controller,
+    maxLength: maxLength,
+
     decoration: InputDecoration(
+      counter: Container(),
       filled: true,
       fillColor: kBlack.withOpacity(0.1),
       focusedBorder: OutlineInputBorder(

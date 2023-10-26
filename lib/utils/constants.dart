@@ -40,3 +40,6 @@ final kPasswordFormatter = [
 final kTextFormatter = [
   FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9 ]')),
 ];
+
+//text input action
+const TextInputAction kActionNext = TextInputAction.next;

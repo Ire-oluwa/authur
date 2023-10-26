@@ -6,7 +6,7 @@ import 'package:untitled/view/login.dart';
 import 'package:untitled/view/main_screen.dart';
 import 'package:untitled/view/registration.dart';
 import 'package:untitled/view/splash.dart';
-import 'package:untitled/view_model/registration_bloc.dart';
+import 'package:untitled/view_model/registration/registration_bloc.dart';
 
 void main() async{
   await ScreenUtil.ensureScreenSize();

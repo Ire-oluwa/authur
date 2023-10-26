@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:untitled/model/responses/login_response.dart';
 import 'package:untitled/model/responses/registration_response.dart';
 import 'package:untitled/model/urls.dart';
 
@@ -32,14 +33,16 @@ import 'package:untitled/model/urls.dart';
   }
 
   /// =============== Login ===============
-  Future<http.Response> signInUser(String email, String password) async {
+  Future<LoginResponse> signInUser(String email, String password) async {
     try {
       final body = jsonEncode({"email": email, "password": password});
       final response = await http.post(
         Uri.parse("${Url.baseUrl}${Url.login}"),
         body: body,
       );
-      return response;
+      final signInResponse = jsonDecode(response.body);
+      LoginResponse loginResponse = LoginResponse(success: signInResponse);
+      return loginResponse;
     } catch (e) {
       throw ("exception: ${e.toString()}");
     }

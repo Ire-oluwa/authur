@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/view/registration.dart';
-import 'package:untitled/view_model/registration_bloc.dart';
+import 'package:untitled/view_model/registration/registration_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

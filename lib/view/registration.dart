@@ -7,7 +7,7 @@ import 'package:untitled/utils/constants.dart';
 import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/login.dart';
 import 'package:untitled/view/main_screen.dart';
-import 'package:untitled/view_model/registration_bloc.dart';
+import 'package:untitled/view_model/registration/registration_bloc.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({
@@ -19,11 +19,11 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
   final fullName = TextEditingController();
   final email = TextEditingController();
   final phone = TextEditingController();
   final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final registrationBloc = BlocProvider.of<RegistrationBloc>(context);
@@ -90,7 +90,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ],
                 ),
                 SizedBox(height: 15.h),
-                BlocConsumer(listener: (context, state) {
+                BlocConsumer<RegistrationBloc, RegistrationState>(
+                    listener: (context, state) {
                   if (state is RegistrationLoaded &&
                       state.registrationResponse.message.isNotEmpty) {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -111,10 +112,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         colour: kBlue,
                         click: () {
                           // Navigator.of(context).pushNamed('/main');
-                          registrationBloc.add(GetRegistration(fullName:
-                          fullName.text, email: email.text, phone: phone.text,
-                              password:
-                          password.text));
+                          registrationBloc.add(GetRegistration(
+                              fullName: fullName.text,
+                              email: email.text,
+                              phone: phone.text,
+                              password: password.text));
                         },
                         child: _buildText(
                             Strings.signUp, 16.sp, FontWeight.w500, kWhite),
@@ -158,59 +160,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Widget _buildPhone() {
-    return TextField(
-      cursorColor: kBlack,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: kBlack.withOpacity(0.1),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        hintText: Strings.phone,
-      ),
+    return CustomTextField(
+      hint: Strings.phone,
+      onChanged: (value) {},
+      inputType: kNumberType,
+      formatter: kNumberFormatter,
+      controller: phone,
+      maxLength: 11,
     );
   }
 
   Widget _buildEmail() {
-    return TextField(
-      cursorColor: kBlack,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: kBlack.withOpacity(0.1),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        hintText: Strings.email,
-      ),
+    return CustomTextField(
+      hint: Strings.email,
+      inputType: kEmailType,
+      controller: email,
+      onChanged: (value) {},
+      formatter: kEmailFormatter,
     );
   }
 
   Widget _buildPassword() {
-    return TextField(
-      cursorColor: kBlack,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: kBlack.withOpacity(0.1),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        hintText: Strings.password,
-      ),
+    return CustomTextField(
+      hint: Strings.password,
+      onChanged: (value) {},
+      controller: password,
+      inputType: kPasswordType,
+      formatter: kPasswordFormatter,
     );
   }
 
