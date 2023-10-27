@@ -14,4 +14,6 @@ class Strings {
   static const forgotPassword = "Forgot Password?";
   static const welcomeBack = "Welcome Back";
   static const continueSignIn = "Sign In to continue";
+  static const regSuccess = "Registration Successful";
+  static const regError = "Error!";
 }

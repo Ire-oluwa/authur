@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:untitled/model/custom_text.dart';
-import 'package:untitled/model/elevated_button.dart';
+import 'package:untitled/utils/custom_text.dart';
+import 'package:untitled/utils/custom_text_field.dart';
+import 'package:untitled/utils/elevated_button.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/registration.dart';
+import 'package:untitled/view_model/login/login_bloc.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  // final RegistrationBloc registrationBloc;
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  late LoginBloc loginBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    loginBloc = BlocProvider.of<LoginBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final loginBloc = BlocProvider.of<LoginBloc>(context);
     return SafeArea(
       child: Scaffold(
         body: kUnfocus(
@@ -62,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  const RegistrationScreen(),
+                            builder: (context) => const RegistrationScreen(),
                           ),
                         );
                       },
@@ -100,39 +117,22 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildEmail() {
-    return TextField(
-      cursorColor: kBlack,
-      decoration: InputDecoration(
-          filled: true,
-          fillColor: kBlack.withOpacity(0.1),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: kBlack),
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          hintText: Strings.email),
+    return CustomTextField(
+      hint: Strings.email,
+      inputType: kEmailType,
+      formatter: kEmailFormatter,
+      onChanged: (value) {},
+      controller: _email,
     );
   }
 
   Widget _buildPassword() {
-    return TextField(
-      cursorColor: kBlack,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: kBlack.withOpacity(0.1),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        hintText: Strings.password,
-      ),
+    return CustomTextField(
+      hint: Strings.password,
+      controller: _password,
+      onChanged: (value) {},
+      inputType: kPasswordType,
+      formatter: kPasswordFormatter,
     );
   }
 }

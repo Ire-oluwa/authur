@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:untitled/model/custom_text_field.dart';
-import 'package:untitled/model/elevated_button.dart';
+import 'package:untitled/model/responses/registration_response.dart';
+import 'package:untitled/utils/alert_dialog.dart';
+import 'package:untitled/utils/custom_text_field.dart';
 import 'package:untitled/utils/constants.dart';
 import 'package:untitled/utils/strings.dart';
 import 'package:untitled/view/login.dart';
@@ -23,10 +24,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final email = TextEditingController();
   final phone = TextEditingController();
   final password = TextEditingController();
+  late RegistrationBloc registrationBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    registrationBloc = BlocProvider.of<RegistrationBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final registrationBloc = BlocProvider.of<RegistrationBloc>(context);
     return kUnfocus(
       child: SafeArea(
         child: Scaffold(
@@ -92,34 +99,89 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 SizedBox(height: 15.h),
                 BlocConsumer<RegistrationBloc, RegistrationState>(
                     listener: (context, state) {
-                  if (state is RegistrationLoaded &&
-                      state.registrationResponse.message.isNotEmpty) {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const MainScreen(),
-                    ));
+                  if (state is RegistrationLoaded
+                      && state.registrationResponse.message.isNotEmpty
+                      ) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomAlertDialog(
+                        title: Strings.regSuccess,
+                        actions: [
+                          TextButton(
+                            onPressed: () =>
+                                Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const MainScreen(),
+                              ),
+                            ),
+                            child: const Text("Ok"),
+                          ),
+                        ],
+                      ),
+                    );
                   } else if (state is RegistrationError) {
                     final message = state.error;
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomAlertDialog(
+                        title: Strings.regError,
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text(
+                              "$message",
+                              textAlign: TextAlign.justify,
+                              softWrap: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 }, builder: (context, state) {
                   if (state is RegistrationLoading) {
+                    Future.delayed(const Duration(seconds: 2));
                     return const CircularProgressIndicator();
                   } else {
                     return Align(
                       alignment: Alignment.center,
-                      child: CustomElevatedButton(
-                        height: 40.h,
-                        width: 320.w,
-                        colour: kBlue,
-                        click: () {
-                          // Navigator.of(context).pushNamed('/main');
-                          registrationBloc.add(GetRegistration(
-                              fullName: fullName.text,
-                              email: email.text,
-                              phone: phone.text,
-                              password: password.text));
+                      child: GestureDetector(
+                        onTap: () {
+                          registrationBloc.add(
+                            GetRegistration(
+                                fullName: fullName.text,
+                                email: email.text,
+                                phone: phone.text,
+                                password: password.text),
+                          );
+                          print(registrationBloc.registrationResponse?.message
+                              .toString());
                         },
-                        child: _buildText(
-                            Strings.signUp, 16.sp, FontWeight.w500, kWhite),
+                        child: Container(
+                          height: 40.h,
+                          width: 320.w,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: kBlue,
+                            borderRadius: BorderRadius.circular(5.r),
+                          ),
+                          child:
+                              BlocBuilder<RegistrationBloc, RegistrationState>(
+                            bloc: registrationBloc,
+                            builder: (BuildContext context, state) {
+                              if (state is RegistrationLoading) {
+                                return const CircularProgressIndicator();
+                              } else {
+                                return _buildText(
+                                  Strings.signUp,
+                                  16.sp,
+                                  FontWeight.w500,
+                                  kWhite,
+                                );
+                              }
+                            },
+                          ),
+                        ),
                       ),
                     );
                   }

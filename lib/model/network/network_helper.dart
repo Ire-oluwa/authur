@@ -26,9 +26,11 @@ import 'package:untitled/model/urls.dart';
       final registrationResponse = jsonDecode(response.body);
       RegistrationResponse regResponse =
           RegistrationResponse(message: registrationResponse);
+
       return regResponse;
     } catch (e) {
-      throw ("exception: ${e.toString()}");
+      print(e);
+      throw (e);
     }
   }
 

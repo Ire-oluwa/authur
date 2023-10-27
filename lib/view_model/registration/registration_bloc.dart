@@ -37,7 +37,7 @@ part 'registration_event.dart';
 part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  late RegistrationResponse registrationResponse;
+  RegistrationResponse? registrationResponse;
   ApiCall apiCall;
 
   RegistrationBloc(this.apiCall) : super(RegistrationInitial()) {
@@ -51,7 +51,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
           event.phone,
           event.password,
         );
-        emit(RegistrationLoaded(registrationResponse));
+        emit(RegistrationLoaded(registrationResponse!));
       }
       catch (e) {
         emit (RegistrationError(e.toString()));

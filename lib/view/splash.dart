@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 2),
     );
 
     final curvedAnimation =
@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     controller.repeat(reverse: true);
 
-    Future.delayed(const Duration(seconds: 8)).then(
+    Future.delayed(const Duration(seconds: 4)).then(
       (value) => Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const RegistrationScreen()),
       ),
