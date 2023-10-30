@@ -163,9 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Google Sign-In Error: $error");
 
       Fluttertoast.showToast(
-          msg: "Google Sign-In Failed. Please try again later.",
-          backgroundColor: Colors.red,
-          textColor: Colors.white);
+          msg: Strings.googleSignInError,
+          backgroundColor: kRed,
+          textColor: kWhite);
     }
   }
 }

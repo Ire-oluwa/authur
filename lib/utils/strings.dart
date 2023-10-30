@@ -16,4 +16,5 @@ class Strings {
   static const continueSignIn = "Sign In to continue";
   static const regSuccess = "Registration Successful";
   static const regError = "Error!";
+  static const googleSignInError = "Google Sign-In Failed. Please try again later.";
 }

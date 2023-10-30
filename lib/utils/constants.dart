@@ -9,6 +9,7 @@ const kBlueGrey = Colors.blueGrey;
 const kWhite = Colors.white;
 const kTransparent = Colors.transparent;
 const kGreen = Colors.green;
+const kRed = Colors.red;
 
 //DISMISS KEYBOARD(the highest widget in the tree)
 Widget kUnfocus({child}) => GestureDetector(
