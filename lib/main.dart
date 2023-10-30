@@ -9,8 +9,14 @@ import 'package:untitled/view/splash.dart';
 import 'package:untitled/view_model/login/login_bloc.dart';
 import 'package:untitled/view_model/registration/registration_bloc.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 void main() async {
-  await ScreenUtil.ensureScreenSize();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).then((value) async => await ScreenUtil.ensureScreenSize());
+
   // final registrationState = RegistrationState();
   runApp(const MyApp());
 }

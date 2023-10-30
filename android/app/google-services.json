@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "108515575494",
+    "project_id": "authur-4c694",
+    "storage_bucket": "authur-4c694.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108515575494:android:e50ebfdd4d7ecc50d5f9c7",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ8b3p3NmUPwYce0cefujk8CZ0k-2345s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108515575494:android:a030e410e3bdcae1d5f9c7",
+        "android_client_info": {
+          "package_name": "com.lorglow.authur"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ8b3p3NmUPwYce0cefujk8CZ0k-2345s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
