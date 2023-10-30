@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/model/network/network_helper.dart';
-import 'package:untitled/model/responses/login_response.dart';
+import 'package:untitled/model/repository/responses/login_response.dart';
 
 part 'login_event.dart';
 

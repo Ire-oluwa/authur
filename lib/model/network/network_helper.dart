@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:untitled/model/responses/login_response.dart';
-import 'package:untitled/model/responses/registration_response.dart';
+import 'package:untitled/model/repository/responses/login_response.dart';
+import 'package:untitled/model/repository/responses/registration_response.dart';
 import 'package:untitled/model/urls.dart';
 
  class ApiCall {

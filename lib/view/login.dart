@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:untitled/model/repository/res_google_sign_in.dart';
 import 'package:untitled/utils/custom_text.dart';
 import 'package:untitled/utils/custom_text_field.dart';
 import 'package:untitled/utils/elevated_button.dart';
@@ -134,5 +137,35 @@ class _LoginScreenState extends State<LoginScreen> {
       inputType: kPasswordType,
       formatter: kPasswordFormatter,
     );
+  }
+
+  void _googleSignIn({required BuildContext context}) async {
+    try {
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        return;
+      }
+      GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
+      String? token = googleAuth.idToken;
+
+      ResGoogleSignInModel socialMediaUser = ResGoogleSignInModel(
+        googleUser.displayName,
+        googleUser.email,
+        googleUser.photoUrl,
+        googleUser.id,
+        token,
+      );
+
+      Fluttertoast.showToast(msg: googleUser.email, backgroundColor: kBlue,
+        textColor: kWhite);
+    } catch (error) {
+      print("Google Sign-In Error: $error");
+
+      Fluttertoast.showToast(
+          msg: "Google Sign-In Failed. Please try again later.",
+          backgroundColor: Colors.red,
+          textColor: Colors.white);
+    }
   }
 }

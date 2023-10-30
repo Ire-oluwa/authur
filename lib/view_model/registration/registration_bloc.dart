@@ -30,7 +30,7 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/model/network/network_helper.dart';
-import 'package:untitled/model/responses/registration_response.dart';
+import 'package:untitled/model/repository/responses/registration_response.dart';
 
 part 'registration_event.dart';
 
